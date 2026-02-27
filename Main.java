@@ -1,4 +1,4 @@
-// --- ABSTRACT PRODUCTS (Interfaces) ---
+
 interface ComputeInstance {
     void configure();
 }
@@ -7,7 +7,6 @@ interface Database {
     void deploy();
 }
 
-// --- AWS FAMILY (Concrete Products) ---
 class EC2 implements ComputeInstance {
     @Override
     public void configure() {
@@ -22,7 +21,6 @@ class RDS implements Database {
     }
 }
 
-// --- AZURE FAMILY (Concrete Products) ---
 class AzureVM implements ComputeInstance {
     @Override
     public void configure() {
@@ -37,14 +35,12 @@ class AzureSQL implements Database {
     }
 }
 
-// --- ABSTRACT FACTORY (Interface) ---
 interface CloudFactory {
     ComputeInstance createCompute();
 
     Database createDatabase();
 }
 
-// --- CONCRETE FACTORIES ---
 class AWSFactory implements CloudFactory {
     @Override
     public ComputeInstance createCompute() {
@@ -69,7 +65,6 @@ class AzureFactory implements CloudFactory {
     }
 }
 
-// --- CLIENT CLASS ---
 public class Main {
     public static void main(String[] args) {
         // Usando la fábrica de AWS
@@ -82,15 +77,14 @@ public class Main {
         myDatabase.deploy();
 
         System.out.println("\n--- Cambiando proveedor a Azure ---");
-
-        // Cambiando la instancia de la fábrica
+       
         factory = new AzureFactory();
 
-        // Creamos nuevos productos con la misma interfaz
         ComputeInstance myNewServer = factory.createCompute();
         Database myNewDatabase = factory.createDatabase();
 
         myNewServer.configure();
         myNewDatabase.deploy();
     }
+
 }
